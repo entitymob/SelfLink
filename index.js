@@ -1,4 +1,6 @@
+const { getToken } = require('./utils/GetToken.js');
 const discord = require('discord.js-selfbot-v13');
+const GetToken = require('./utils/GetToken.js');
 const client = new discord.Client({
     intents: [
         discord.Intents.FLAGS.GUILDS,
@@ -14,4 +16,17 @@ const client = new discord.Client({
         discord.Intents.FLAGS.GUILD_INTEGRATIONS,
         discord.Intents.FLAGS.GUILD_WEBHOOKS,
     ],
+});
+
+console.log(`Starting...`);
+
+
+getToken().then((tokens) => {
+    if(tokens == undefined) {
+        console.log(`No tokens found!`);
+        process.exit(2);
+    }
+    tokens.forEach((token) => {
+        client.login(token);
+    });
 });
