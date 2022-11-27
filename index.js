@@ -1,6 +1,5 @@
 const { getToken } = require('./utils/GetToken.js');
 const discord = require('discord.js-selfbot-v13');
-const GetToken = require('./utils/GetToken.js');
 const client = new discord.Client({
     intents: [
         discord.Intents.FLAGS.GUILDS,
@@ -25,12 +24,12 @@ client.on('ready', () => {
     client.user.setActivity('Connected', { type: 'COMPETING', name: 'SelfNet' });
 });
 
-getToken().then((tokens) => {
-    if(tokens == undefined) {
-        console.log(`No tokens found!`);
-        process.exit(2);
-    }
-    tokens.forEach((token) => {
-        client.login(token);
-    });
-});
+let token = getToken();
+console.log(token);
+
+if(token == undefined) {
+    console.log('Invalid token ! Please retry');
+    token = getToken();
+}
+
+client.login(token);
