@@ -20,6 +20,10 @@ const client = new discord.Client({
 
 console.log(`Starting...`);
 
+client.on('ready', () => {
+    console.log(`Logged in as ${client.user.tag}`);
+    client.user.setActivity('Connected', { type: 'COMPETING', name: 'SelfNet' });
+});
 
 getToken().then((tokens) => {
     if(tokens == undefined) {
