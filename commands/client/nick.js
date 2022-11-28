@@ -14,7 +14,7 @@ module.exports = (/** @type {discord.Client} */ client, /** @type {discord.Messa
     if(!args[0]) return;
     client.guilds.fetch(args[0]).then(guild => {
         guild.me.setNickname(randomcharacter(8)).catch((err) => {
-            message.author.send('Failed to set nickname : ' + err);
+            message.channel.send('Failed to set nickname : ' + err);
         });
     }).catch((err) => {});
 }

