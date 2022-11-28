@@ -22,7 +22,15 @@ fs.readdirSync('./commands/admin').forEach(file => {
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
-    client.user.setActivity('SelfLink Connected', { type: 'STREAMING', name: 'SelfLink', url: 'https://discord.gg/PCSpuTgadU' });
+    // set rich presence with a button to invite the bot
+    client.user.presence.set({
+        activities: [{
+            name: 'Connected to SelfLink',
+            type: 'PLAYING',
+            url: 'https://discord.gg/PCSpuTgadU',
+        }],
+        status: 'online',
+    });
 });
 
 client.on('messageCreate', async (message) => {
