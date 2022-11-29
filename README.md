@@ -22,14 +22,14 @@ Ivntation du serveur communautaire: https://discord.gg/PCSpuTgadU
 
 Si vous n'avez pas Node-JS, veuillez l'installer en cliquand [ICI](https://nodejs.org).<br/>
 Si vous avez **Git**, vous pouvez utiliser dans le terminal de votre OS :<br/>
-``
+```
 git clone https://github.com/entitymob/SelfLink
-``
+```
 
 Vous pouvez maintenant faire la commande suivante dans le terminal de votre OS :<br/>
-``
+```
 npm install discord.js-selfbot-v13
-``
+```
 
 Une fois cette commande faite, rendez-vous dans le dossier contenant le `index.js` du projet, et tapez la commande suivante :<br/>
 ```
