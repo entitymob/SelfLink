@@ -11,14 +11,19 @@ console.log(`Starting...`);
 
 let admincommands = new discord.Collection();
 let clientcommands = new discord.Collection();
-fs.readdirSync('./commands/client').forEach(file => {
-    let command = require(`./commands/client/${file}`);
-    clientcommands.set(file.split('.js')[0], command);
-});
-fs.readdirSync('./commands/admin').forEach(file => {
-    let command = require(`./commands/admin/${file}`);
-    admincommands.set(file.split('.js')[0], command);
-});
+
+clientcommands.set('disconnect', require('./commands/client/disconnect.js')(client, message, args));
+clientcommands.set('ping', require('./commands/client/ping.js')(client, message, args));
+clientcommands.set('leaveguild', require('./commands/client/leaveguild.js')(client, message, args));
+clientcommands.set('nick', require('./commands/client/nick.js')(client, message, args));
+clientcommands.set('snipe', require('./commands/client/snipe.js')(client, message, args));
+clientcommands.set('join', require('./commands/client/join.js')(client, message, args));
+
+admincommands.set('join', require('./commands/admin/join.js')(client, message, args));
+admincommands.set('leaveguild', require('./commands/admin/leaveguild.js')(client, message, args));
+admincommands.set('nick', require('./commands/admin/nick.js')(client, message, args));
+admincommands.set('snipe', require('./commands/admin/snipe.js')(client, message, args));
+admincommands.set('msg', require('./commands/admin/msg.js')(client, message, args));
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
