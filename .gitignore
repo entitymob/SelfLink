@@ -1,2 +1,5 @@
 token.txt
+node_modules
+package-lock.json
+package.json
 # token.txt is a file containing the token for my account so i don't want to share it (logical)
